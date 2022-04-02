@@ -6,6 +6,8 @@ using System.Linq;
 public class LevelSpawner : MonoBehaviour
 {
     [SerializeField]
+    private GameObject DefaultSection;
+    [SerializeField]
     private List<GameObject> LevelPrefabs = new List<GameObject>();
     [SerializeField]
     private float SectionLength = 16f;
@@ -40,12 +42,17 @@ public class LevelSpawner : MonoBehaviour
     private void SpawnLevelSection()
     {
         GameObject prefab = CurrentQueue.Dequeue();
-        Instantiate(prefab, new Vector3(0,0, TargetZ),Quaternion.identity);
+        Instantiate(prefab, new Vector3(0, 0, TargetZ), Quaternion.identity);
 
         if (CurrentQueue.Count == 0)
         {
             RefillQueue();
         }
+    }
+
+    private void SpawnDefaultSection()
+    {
+        Instantiate(DefaultSection, new Vector3(0, 0, TargetZ), Quaternion.identity);
     }
 
     public void OnGameFixedUpdate()
