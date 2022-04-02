@@ -108,7 +108,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 16dea62b2b8c78d42b2e4110dd1a6874, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  WindStrength: {x: 5, y: 2.5}
+  WindStrength: {x: 5, y: 3}
 --- !u!1001 &6333686644337160272
 PrefabInstance:
   m_ObjectHideFlags: 0

@@ -23,6 +23,8 @@ public class PlaneController : MonoBehaviour
     [SerializeField]
     private float WindAcceleration = 5f;
     [SerializeField]
+    public float MaxPlaneRaisingCharge = 10f;
+    [SerializeField]
     private UnityEvent OnMove;
     [SerializeField]
     private UnityEvent OnCrash;
@@ -35,7 +37,7 @@ public class PlaneController : MonoBehaviour
     public PlaneState CurrentState { get; private set; } = PlaneState.Flying;
     public float HorizontalMovement { get; private set; } = 0;
     public float PlaneRaisingVector { get; private set; } = 0;
-
+    public float CurrentPlaneRaisingCharge { get; private set; } = 10f;
 
     private Rigidbody rigidbody;
     private Vector3 Velocity = Vector3.zero;
@@ -49,6 +51,11 @@ public class PlaneController : MonoBehaviour
         rigidbody = GetComponent<Rigidbody>();
     }
 
+    private void Start()
+    {
+        CurrentPlaneRaisingCharge = MaxPlaneRaisingCharge;
+    }
+
     public void OnUpdateHorizontalInput(InputAction.CallbackContext context)
     {
         HorizontalMovement = context.ReadValue<float>();
@@ -60,7 +67,7 @@ public class PlaneController : MonoBehaviour
     }
 
     // Update is called once per frame
-    void FixedUpdate()
+    public void PlaneUpdate()
     {
         if (CurrentState == PlaneState.Flying)
         {
@@ -89,7 +96,18 @@ public class PlaneController : MonoBehaviour
 
     private void UpdateAngleFactor()
     {
-        PlaneRaisingVector = Mathf.MoveTowards(PlaneRaisingVector, PlaneRaisingInput, PlaneRotationSpeed * Time.deltaTime);
+        if (PlaneRaisingInput >= 0.5f)
+        {
+            CurrentPlaneRaisingCharge -= Time.deltaTime;
+        }
+        if (CurrentPlaneRaisingCharge <= 0)
+        {
+            PlaneRaisingVector = Mathf.MoveTowards(PlaneRaisingVector, 0, PlaneRotationSpeed * Time.deltaTime);
+        }
+        else
+        {
+            PlaneRaisingVector = Mathf.MoveTowards(PlaneRaisingVector, PlaneRaisingInput, PlaneRotationSpeed * Time.deltaTime);
+        }
     }
 
     private void UpdateWindStrength()
@@ -102,6 +120,11 @@ public class PlaneController : MonoBehaviour
         CurrentWindSpeed = Vector2.MoveTowards(CurrentWindSpeed, WindStrength, WindAcceleration * Time.deltaTime);
     }
 
+    private void Crash(){
+        CurrentState = PlaneState.Crashed;
+        OnCrash.Invoke();
+    }
+
     private void OnTriggerEnter(Collider other)
     {
         if (other.attachedRigidbody != null)
@@ -110,6 +133,10 @@ public class PlaneController : MonoBehaviour
             if (windZone != null)
             {
                 WindVolumes.Add(windZone);
+            }
+
+            if (other.attachedRigidbody.tag == "DeathPlane"){
+                Crash();
             }
         }
     }
