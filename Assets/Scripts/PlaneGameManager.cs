@@ -40,7 +40,7 @@ public class PlaneGameManager : MonoBehaviour
 
     private void Start()
     {
-        StartGame();
+        //StartGame();
     }
 
     public void FixedUpdate()

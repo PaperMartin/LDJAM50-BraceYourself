@@ -28,6 +28,11 @@ public class LevelSpawner : MonoBehaviour
     void Start()
     {
         RefillQueue();
+        while (controller.transform.position.z + OffsetFromPlayer >= TargetZ)
+        {
+            SpawnLevelSection();
+            TargetZ += SectionLength;
+        }
     }
 
     private void RefillQueue()
