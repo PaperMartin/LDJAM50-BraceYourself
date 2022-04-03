@@ -735,6 +735,8 @@ MonoBehaviour:
   - {fileID: 1930890822283062426, guid: d70ef389e6527074c9ccbd5a6375b887, type: 3}
   - {fileID: 318709001655873121, guid: db51aa9aa6912364da4f13326e1cc7e6, type: 3}
   - {fileID: 4608791594396784764, guid: a0934c9a9de00334ea4a8adeacb2226b, type: 3}
+  - {fileID: 3515868776683007139, guid: 3c1225a4a61982f479d7fb94b532625a, type: 3}
+  - {fileID: 1686152200978118561, guid: bfbe09dc1697aa8429e8e02108290cd3, type: 3}
   SectionLength: 16
   OffsetFromPlayer: 64
 --- !u!114 &429246350
