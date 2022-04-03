@@ -7,8 +7,6 @@ public class PlaneAudioManager : MonoBehaviour
     [SerializeField]
     private AudioSource EngineAudioSource;
     [SerializeField]
-    private AudioSource CrashAudioSource;
-    [SerializeField]
     private Vector2 EnginePitchMinMax;
     PlaneController controller;
 
@@ -18,10 +16,5 @@ public class PlaneAudioManager : MonoBehaviour
 
     public void OnMove(){
         EngineAudioSource.pitch = Mathf.Lerp(EnginePitchMinMax.x,EnginePitchMinMax.y,controller.PlaneRaisingVector);
-    }
-
-    public void OnCrash(){
-        EngineAudioSource.Stop();
-        CrashAudioSource.Play();
     }
 }

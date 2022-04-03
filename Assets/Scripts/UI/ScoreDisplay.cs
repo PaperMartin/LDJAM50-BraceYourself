@@ -8,10 +8,8 @@ public class ScoreDisplay : MonoBehaviour
     [SerializeField]
     private TextMeshProUGUI text;
     
-    private PlaneController controller;
 
     private void OnEnable() {
-        controller = FindObjectOfType<PlaneController>();
     }
 
     // Start is called before the first frame update
@@ -23,7 +21,7 @@ public class ScoreDisplay : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        float score = Mathf.Floor(controller.transform.position.z);
+        float score = Mathf.Floor(PlaneGameManager.Instance.Score);
         text.text = "Score : " + score;
     }
 }
